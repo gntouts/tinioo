@@ -16,3 +16,6 @@ Download or clone tinioo
 git clone https://github.com/gntouts/tinioo.git
 ```
 Run tinioo!
+```
+python3 tinioo.py
+```
