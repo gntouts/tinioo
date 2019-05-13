@@ -72,4 +72,10 @@ for item in photos:
     with open(itempath, 'rb') as f:
         dbx.files_upload(f.read(), dest_folder + "/" + item, mute=True)
     count += 1
-    print("Progress: ", count, "out of ", len(photos), uploaded)
+    print("Progress: ", count, "out of ", len(photos), "uploaded")
+
+# DELETING ORIGINAL PHOTOS
+if input("Do you want to delete the original photos? Y/N: ") == "Y":
+    for item in files:
+        if str(type(item))[22:-10] == "File":
+            dbx.files_delete(item.path_display)
