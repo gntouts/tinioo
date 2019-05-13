@@ -29,7 +29,7 @@ if source_folder != "":
 
 dest_folder = input(
     "Where do you want to store the optimized photos? ")
-dest_folder = "/" + dest_folder
+#dest_folder = "/" + dest_folder
 
 # AUTHENTICATION
 dbx = dropbox.Dropbox(dropkey)
@@ -57,10 +57,18 @@ if not os.path.isdir("." + dest_folder):
 
 # COMPRESSING ALL PHOTOS IN GIVEN FOLDER
 for item in files:
-    source = tinify.from_url(
-        dbx.files_get_temporary_link(item.path_display).link)
-    dest = dest_folder[1:] + "/" + item.name
-    source.to_file(dest)
-    with open(dest, 'rb') as f:
-        print("xd")
-        dbx.files_upload(f.read(), dest_folder + item.name, mute=True)
+    if str(type(item))[22:-10] == "File":
+        source = tinify.from_url(
+            dbx.files_get_temporary_link(item.path_display).link)
+        dest = dest_folder[1:] + "/" + item.name
+        source.to_file(dest)
+print("Photos successfully optimized")
+
+# UPLOAD ALL PHOTOS
+photos = os.listdir("." + dest_folder)
+for item in photos:
+    print(item)
+    itempath = "." + dest_folder + "/" + item
+    with open(itempath, 'rb') as f:
+        dbx.files_upload(f.read(), dest_folder + "/" + item, mute=True)
+        print(".")
