@@ -63,12 +63,13 @@ for item in files:
         dest = dest_folder[1:] + "/" + item.name
         source.to_file(dest)
 print("Photos successfully optimized")
-
+print("Starting uploading")
 # UPLOAD ALL PHOTOS
 photos = os.listdir("." + dest_folder)
+count = 0
 for item in photos:
-    print(item)
     itempath = "." + dest_folder + "/" + item
     with open(itempath, 'rb') as f:
         dbx.files_upload(f.read(), dest_folder + "/" + item, mute=True)
-        print(".")
+    count += 1
+    print("Progress: ", count, "out of ", len(photos), uploaded)
