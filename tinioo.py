@@ -39,7 +39,7 @@ dbx.users_get_current_account()
 response = dbx.files_list_folder(source_folder)
 files = response.entries
 
-# CHECKING FOR FOLDER IN DROPBOX
+# CHECKING FOR DESTINATION FOLDER IN DROPBOX
 found = False
 for item in response.entries:
     if str(type(item))[22:-10] == "Folder":
@@ -51,10 +51,11 @@ if found == False:
     dbx.files_create_folder("/" + dest_folder)
 dest_folder = "/" + dest_folder
 
-# CHECKING FOR FOLDER LOCALLY
+# CHECKING FOR FOLDER LOCALLY AND CREATING IF NOT EXISTING
+if not os.path.isdir("." + dest_folder):
+    os.mkdir("." + dest_folder)
 
-
-# COMPRESSING ALL PHOTOS IN MAIN FOLDER
+# COMPRESSING ALL PHOTOS IN GIVEN FOLDER
 for item in files:
     source = tinify.from_url(
         dbx.files_get_temporary_link(item.path_display).link)
