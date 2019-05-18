@@ -76,6 +76,4 @@ for item in photos:
 
 # DELETING ORIGINAL PHOTOS
 if input("Do you want to delete the original photos? Y/N: ") == "Y":
-    for item in files:
-        if str(type(item))[22:-10] == "File":
-            dbx.files_delete(item.path_display)
+    print("please wait...")
